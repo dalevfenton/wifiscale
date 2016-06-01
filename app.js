@@ -8,8 +8,7 @@ var mongo = require('mongodb');
 var app = express();
 app.use(cors()); //allows overriding cross origin policy (use npm install if needed)
 var db;
-console.log(process.env.MONGODB_URI);
-mongo.MongoClient.connect(process.env.MONGODB_URI, function(err, database){
+mongo.MongoClient.connect(process.env.MONGODB_URI || test, function(err, database){
   if(err){
     console.log(err);
     throw err;
