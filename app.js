@@ -18,22 +18,22 @@ app.use(function(req, res, next){
 // POST to DB
 app.post('/api/addweight', function(req, res){
   var db = req.db;
-  console.log(req);
-  // var weight = req.body.weight;
-  // var time = req.body.timeStamp;
-  //
-  // var collection = db.get('datapoints');
-  //
-  // collection.insert({
-  //   "weight": weight,
-  //   "time": time
-  // }, function(err, doc){
-  //   if(err){
-  //     res.send("Error adding to database");
-  //   }else{
-  //     res.send(doc);
-  //   }
-  // });
+  console.log(req.query);
+  var weight = req.query.weight;
+  var time = req.query.timeStamp;
+
+  var collection = db.get('datapoints');
+
+  collection.insert({
+    "weight": weight,
+    "time": time
+  }, function(err, doc){
+    if(err){
+      res.send("Error adding to database");
+    }else{
+      res.send(doc);
+    }
+  });
 });
 
 app.get('/api/getweight', function(req, res){
