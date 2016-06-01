@@ -13,30 +13,32 @@ var mongo = require('mongodb');
 
 var app = express();
 app.use(cors()); //allows overriding cross origin policy (use npm install if needed)
-app.use(function(req, res, next){
-  req.db = db;
-  next();
-});
-
+// app.use(function(req, res, next){
+//   req.db = db;
+//   next();
+// });
+var db;
 //test out our DB connection
-mongo.mongoClient.connect(process.env.MONGODB_URI, function(err, db){
+var test = 'mongodb://heroku_4bjm4d0v:mg5vf2fl1l2mor3iqj8fo6s97d@ds021343.mlab.com:21343/heroku_4bjm4d0v';
+console.log(mongo.MongoClient);
+mongo.MongoClient.connect(process.env.MONGODB_URI || test, function(err, database){
+  // console.log(err);
   if(err) throw err;
-
-  console.log(db);
-  var datapoints = db.collection('datapoints');
-  datapoints.insert(seedData, function(err, result){
-    if(err) throw err;
-    console.log(result);
-  });
+  db = database;
+  // console.log(db);
+  // var datapoints = db.collection('datapoints');
+  // datapoints.insert(seedData, function(err, result){
+  //   if(err) throw err;
+  //   console.log(result);
+  // });
 });
 // POST to DB
 app.post('/api/addweight', function(req, res){
-  var db = req.db;
   console.log(req.query);
   var weight = req.query.weight;
   var time = req.query.timeStamp;
 
-  var collection = db.get('datapoints');
+  var collection = db.collection('datapoints');
 
   collection.insert({
     "weight": weight,
@@ -51,9 +53,8 @@ app.post('/api/addweight', function(req, res){
 });
 
 app.get('/api/getweight', function(req, res){
-  var db = req.db;
-  var collection = db.get('datapoints');
-  collection.find({}, {}, function(e, docs){
+  var collection = db.collection('datapoints');
+  collection.find({}).toArray(function(e, docs){
     if(e){
       res.send(e);
     }else{
