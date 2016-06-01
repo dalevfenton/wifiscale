@@ -1,0 +1,28 @@
+{
+  "name": "wifiScale",
+  "version": "0.0.1",
+  "description": "a backend that accepts post requests from a wifi scale and serves data to a frontend",
+  "private": false,
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dalevfenton/wifiscale"
+  },
+  "dependencies": {
+    "express": "^4.13.4",
+    "install": "^0.5.6",
+    "npm": "^3.8.0",
+    "request": "^2.69.0",
+    "cors": "^2.7.0",
+    "mongodb": "1.4.4",
+    "monk": "1.0.1"
+  },
+  "keywords": [
+    "node",
+    "heroku",
+    "express"
+  ],
+  "license": "MIT"
+}
