@@ -40,7 +40,11 @@ app.get('/api/getweight', function(req, res){
   var db = req.db;
   var collection = db.get('datapoints');
   collection.find({}, {}, function(e, docs){
-    res.send(docs);
+    if(e){
+      res.send(e);
+    }else{
+      res.send(docs);
+    }
   });
 });
 
